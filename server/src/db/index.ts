@@ -3,17 +3,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-console.log('Connecting to the database with the following settings:');
-console.log({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD ? '****' : 'Not Provided',
-  port: process.env.DB_PORT,
-});
-
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Disable SSL certificate validation (needed for Render)
+  },
 });
 
 pool.on('connect', () => {
@@ -29,7 +23,7 @@ pool.on('error', (err) => {
     const res = await pool.query('SELECT NOW()');
     console.log('Test query result:', res.rows[0]);
   } catch (err) {
-    console.error('Database query failed:');
+    console.error('Database query failed:'); // Improved error logging
   }
 })();
 

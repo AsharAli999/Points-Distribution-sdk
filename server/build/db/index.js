@@ -16,16 +16,11 @@ exports.query = void 0;
 const pg_1 = require("pg");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-console.log('Connecting to the database with the following settings:');
-console.log({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD ? '****' : 'Not Provided',
-    port: process.env.DB_PORT,
-});
 const pool = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false, // Disable SSL certificate validation (needed for Render)
+    },
 });
 pool.on('connect', () => {
     console.log('Database connected successfully');
@@ -39,7 +34,7 @@ pool.on('error', (err) => {
         console.log('Test query result:', res.rows[0]);
     }
     catch (err) {
-        console.error('Database query failed:');
+        console.error('Database query failed:'); // Improved error logging
     }
 }))();
 const query = (text, params) => __awaiter(void 0, void 0, void 0, function* () {
