@@ -16,7 +16,7 @@ export class PointsSDK {
   private client: AxiosInstance;
   private apiKey: string;
 
-  constructor(apiKey: string, baseURL: string = 'http://localhost:3000/api') {
+  constructor(apiKey: string, baseURL: string = 'https://points-distribution-sdk.onrender.com/api') {
     this.apiKey = apiKey;
     this.client = axios.create({
       baseURL,
@@ -96,7 +96,7 @@ export class PointsSDK {
   static async register(
     projectName: string,
     projectEmail: string,
-    baseURL: string = 'http://localhost:3000/api'
+    baseURL: string = 'https://points-distribution-sdk.onrender.com/api'
   ): Promise<{ apiKey: string }> {
     try {
       const response = await axios.post(`${baseURL}/register`, {

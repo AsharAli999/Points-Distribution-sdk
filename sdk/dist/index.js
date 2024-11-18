@@ -7,7 +7,7 @@ exports.PointsSDK = void 0;
 // src/index.ts
 const axios_1 = __importDefault(require("axios"));
 class PointsSDK {
-    constructor(apiKey, baseURL = 'http://localhost:3000/api') {
+    constructor(apiKey, baseURL = 'https://points-distribution-sdk.onrender.com/api') {
         this.apiKey = apiKey;
         this.client = axios_1.default.create({
             baseURL,
@@ -80,7 +80,7 @@ class PointsSDK {
      * @param projectName Name of the project
      * @param projectEmail Project contact email
      */
-    static async register(projectName, projectEmail, baseURL = 'http://localhost:3000/api') {
+    static async register(projectName, projectEmail, baseURL = 'https://points-distribution-sdk.onrender.com/api') {
         try {
             const response = await axios_1.default.post(`${baseURL}/register`, {
                 projectName,
